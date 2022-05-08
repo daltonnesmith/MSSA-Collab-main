@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/stocker/node_modules
+/stocker/.pnp
+/stocker.pnp.js
+
+# testing
+/stocker/coverage
+
+# production
+/stocker/build
+
+# misc
+/stocker.DS_Store
+/stocker.env.local
+/stocker.env.development.local
+/stocker.env.test.local
+/stocker.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
