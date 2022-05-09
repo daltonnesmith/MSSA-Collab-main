@@ -70,6 +70,7 @@ form .form-inner .form-group input {
     background-color: #f8f8f8;
     border-radius: 8px;
     transition: 0.4s;
+    //test
 }
 
 form .form-inner .form-group input:focus {
