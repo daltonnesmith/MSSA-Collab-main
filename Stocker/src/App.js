@@ -1,11 +1,44 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect, Component } from "react";
 import Stock from "./Components/Stock";
 import WebSocket from "./Components/WebSocket";
+import LoginForm from "./Components/LoginForm";
+import { DEFAULT_RECONNECT_INTERVAL_MS } from "react-use-websocket/dist/lib/constants";
 
 function App() {
+    const adminUser = {
+        email: "admin@admin.com",
+        password: "admin123",
+    };
+    const [user, setUser] = useState({ name: "", email: "" });
+    const [error, setError] = useState("");
+    const Login = (detail) => {
+        console.log(detail);
+
+        if (
+            detail.email == adminUser.email &&
+            detail.password == adminUser.password
+        ) {
+            console.log("Logged In");
+            setUser({
+                name: detail.name,
+                email: detail.email,
+            });
+        } else {
+            console.log("failed to login");
+            alert("INCORRECT LOGIN DETAILS");
+        }
+    };
+
+    const Logout = () => {
+        console.log("Logout");
+        setUser({
+            name: "",
+            email: "",
+        });
+    };
+
     //alter the initial state to be a function that will on execute on initial render.
     const [btcStockList, setbtcStockList] = useState(() => {
         // get the last trade from localStorage
@@ -66,20 +99,17 @@ function App() {
         setbtcStockList(updatedList);
     };
     return (
-        <div className="row">
-            <div className="col-md-3" />
-            <div className="col-md-6">
-                <div className="App">
+        <div class="row">
+            <div class="col-md-3" />
+            <div class="col-md-6">
+                <div class="App">
                     {/* <StockInput btcStockListHandler={onSetbtcStockList} /> */}
                     <h1 className="text-color:blue">Stocker</h1>
-
                     {/* WebSocket button Press for the most recent trade */}
-
                     <WebSocket
                         setbtcStockListHandler={onSetbtcStockList}
                         setEthStockListHandler={onSetEthStockList}
                     />
-
                     {/* {btcStockList.map((stock, index) => (
                                 <Stock
                                     stockItem={stock}
@@ -111,7 +141,16 @@ function App() {
                             )} */}
                 </div>
             </div>
+            <div mx-5 className="App">
+                {user.email != ""}
+                <h2>
+                    Welcome, <span>{user.name}</span>
+                    <LoginForm Login={Login} error={error} />
+                </h2>
+                <button onClick={Logout}>Logout</button>
+            </div>
             <div className="col-md-3" />
+            <div></div>
         </div>
     );
 }
